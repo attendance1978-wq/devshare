@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevShare – Live</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital@0;1&family=Syne:wght@700;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #050508;
+      --surface: #0e0e14;
+      --border: #1c1c28;
+      --accent: #00e5ff;
+      --accent2: #7c3aed;
+      --text: #e4e4f0;
+      --dim: #555570;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    /* Animated grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: .4;
+      z-index: 0;
+      animation: gridPan 20s linear infinite;
+    }
+
+    @keyframes gridPan {
+      from { background-position: 0 0; }
+      to   { background-position: 48px 48px; }
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px 56px;
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 80px rgba(0,229,255,.06), 0 0 0 1px var(--border);
+      animation: fadeUp .6s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(0,229,255,.25);
+      border-radius: 100px;
+      padding: 4px 14px;
+      margin-bottom: 24px;
+    }
+
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: .4; transform: scale(.7); }
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.2rem, 6vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff 30%, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    p {
+      color: var(--dim);
+      font-size: .85rem;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .cmd {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: border-color .2s;
+    }
+
+    .cmd:hover { border-color: var(--accent); }
+
+    .cmd code {
+      flex: 1;
+      text-align: left;
+      font-size: .82rem;
+      color: var(--accent);
+    }
+
+    .cmd .copy-btn {
+      font-size: .7rem;
+      color: var(--dim);
+      transition: color .2s;
+    }
+
+    .cmd:hover .copy-btn { color: var(--accent); }
+
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .feature {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: left;
+      font-size: .78rem;
+    }
+
+    .feature-icon { font-size: 1.2rem; margin-bottom: 6px; display: block; }
+    .feature-name { color: var(--text); font-weight: 600; margin-bottom: 4px; }
+    .feature-desc { color: var(--dim); }
+
+    .footer {
+      margin-top: 28px;
+      font-size: .72rem;
+      color: var(--dim);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      DevShare is running
+    </div>
+
+    <h1>Your dev server,<br>shared instantly.</h1>
+
+    <p>
+      A zero-config local server with live reload,<br>
+      public tunneling and QR code sharing.
+    </p>
+
+    <div class="cmd" onclick="copy('npm run dev')">
+      <code>npm run dev</code>
+      <span class="copy-btn">copy</span>
+    </div>
+    <div class="cmd" onclick="copy('npm run dev -- --share --qrcode')">
+      <code>npm run dev -- --share --qrcode</code>
+      <span class="copy-btn">copy</span>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <span class="feature-icon">⚡</span>
+        <div class="feature-name">Live Reload</div>
+        <div class="feature-desc">Instant browser refresh on file changes</div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🌐</span>
+        <div class="feature-name">Public Share</div>
+        <div class="feature-desc">Tunnel to the internet with --share</div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📱</span>
+        <div class="feature-name">QR Code</div>
+        <div class="feature-desc">Scan on any device with --qrcode</div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📂</span>
+        <div class="feature-name">Static Files</div>
+        <div class="feature-desc">Serve any directory with --dir</div>
+      </div>
+    </div>
+
+    <div class="footer">Edit this file and watch it live-reload →</div>
+  </div>
+
+  <script>
+    function copy(text) {
+      navigator.clipboard.writeText(text).catch(() => {});
+      const cmds = document.querySelectorAll('.copy-btn');
+      cmds.forEach(b => {
+        if (b.closest('.cmd').querySelector('code').textContent === text) {
+          b.textContent = 'copied!';
+          setTimeout(() => b.textContent = 'copy', 1500);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
