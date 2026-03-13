@@ -1,0 +1,34 @@
+{
+  "name": "@o-town/devshareip",
+  "version": "1.0.0",
+  "description": "Local dev server with instant public sharing + QR code",
+  "main": "src/server.js",
+  "bin": {
+    "devshare": "src/cli.js"
+  },
+  "scripts": {
+    "dev": "node src/cli.js",
+    "start": "node src/cli.js"
+  },
+  "keywords": ["dev-server", "share", "tunnel", "qrcode", "livereload"],
+  "author": "o-town",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/attendance1978-wq/devshare"
+  },
+  "homepage": "https://github.com/attendance1978-wq/devshare#readme",
+  "bugs": {
+    "url": "https://github.com/attendance1978-wq/devshare/issues"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "chokidar": "^3.6.0",
+    "express": "^5.0.1",
+    "figlet": "^1.7.0",
+    "qrcode": "^1.5.4",
+    "tunnelmole": "^2.3.3",
+    "ws": "^8.18.0",
+    "yargs": "^17.7.2"
+  }
+}
